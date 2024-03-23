@@ -248,7 +248,59 @@ class WebServer {
           // TODO: Parse the JSON returned by your fetch and create an appropriate
           // response based on what the assignment document asks for
 
-        } else {
+        }  else if (request.contains("concatenate?")) {
+          try {
+              Map<String, String> query_pairs = new LinkedHashMap<String, String>();
+              query_pairs = splitQuery(request.replace("concatenate?", ""));
+      
+              String str1 = query_pairs.get("str1");
+              String str2 = query_pairs.get("str2");
+      
+              if (str1 == null || str2 == null) {
+                  throw new IllegalArgumentException("Both str1 and str2 must be provided");
+              }
+      
+              String result = str1 + str2;
+      
+              // Generate response for successful concatenation
+              builder.append("HTTP/1.1 200 OK\n");
+              builder.append("Content-Type: text/plain; charset=utf-8\n");
+              builder.append("\n");
+              builder.append("Result: " + result);
+      
+          } catch (IllegalArgumentException e) {
+              // Generate response for invalid arguments
+              builder.append("HTTP/1.1 400 Bad Request\n");
+              builder.append("Content-Type: text/plain; charset=utf-8\n");
+              builder.append("\n");
+              builder.append(e.getMessage());
+          }
+        } else if (request.contains("length?")) {
+          try {
+              Map<String, String> query_pairs = new LinkedHashMap<String, String>();
+              query_pairs = splitQuery(request.replace("length?", ""));
+      
+              String str = query_pairs.get("str");
+      
+              if (str == null) {
+                  throw new IllegalArgumentException("str must be provided");
+              }
+      
+              int length = str.length();
+      
+              // Generate response for successful length calculation
+              builder.append("HTTP/1.1 200 OK\n");
+              builder.append("Content-Type: text/plain; charset=utf-8\n");
+              builder.append("\n");
+              builder.append("Length: " + length);
+      
+          } catch (IllegalArgumentException e) {
+              // Generate response for invalid arguments
+              builder.append("HTTP/1.1 400 Bad Request\n");
+              builder.append("Content-Type: text/plain; charset=utf-8\n");
+              builder.append("\n");
+              builder.append(e.getMessage());
+          }else {
           // if the request is not recognized at all
 
           builder.append("HTTP/1.1 400 Bad Request\n");
