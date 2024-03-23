@@ -276,7 +276,8 @@ class WebServer {
               builder.append("Content-Type: text/plain; charset=utf-8\n");
               builder.append("\n");
               builder.append(e.getMessage());
-          } else if (request.contains("length?")) {
+          }
+        } else if (request.contains("length?")) {
             try {
                 Map<String, String> query_pairs = new LinkedHashMap<String, String>();
                 query_pairs = splitQuery(request.replace("length?", ""));
@@ -301,7 +302,8 @@ class WebServer {
                 builder.append("Content-Type: text/plain; charset=utf-8\n");
                 builder.append("\n");
                 builder.append(e.getMessage());
-            } else {
+            }
+          } else {
           // if the request is not recognized at all
 
           builder.append("HTTP/1.1 400 Bad Request\n");
