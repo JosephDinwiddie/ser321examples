@@ -26,8 +26,6 @@ import java.util.Map;
 import java.util.LinkedHashMap;
 import java.nio.charset.Charset;
 
-
-
 class WebServer {
   public static void main(String args[]) {
     WebServer server = new WebServer(9000);
@@ -198,37 +196,40 @@ class WebServer {
         } else if (request.contains("multiply?")) {
           // This multiplies two numbers, there is NO error handling, so when
           // wrong data is given this just crashes
+
+          Map<String, String> query_pairs = new LinkedHashMap<String, String>();
+          // extract path parameters
+          query_pairs = splitQuery(request.replace("multiply?", ""));
           Integer result;
-
           try {
-            Map<String, String> query_pairs = new LinkedHashMap<String, String>();
-            // extract path parameters
-            query_pairs = splitQuery(request.replace("multiply?", ""));
-
             // extract required fields from parameters
             Integer num1 = Integer.parseInt(query_pairs.get("num1"));
             Integer num2 = Integer.parseInt(query_pairs.get("num2"));
 
             // do math
             result = num1 * num2;
-
-            
           } catch (NumberFormatException e) {
-            // Generate response for number format exception
+            // Generate response for invalid arguments
             builder.append("HTTP/1.1 400 Bad Request\n");
+            builder.append("Content-Type: text/plain; charset=utf-8\n");
+            builder.append("\n");
+            builder.append("Invalid arguments");
+            response = builder.toString().getBytes();
+            return response;
+          }
+
+            // Generate response
+            builder.append("HTTP/1.1 200 OK\n");
             builder.append("Content-Type: text/html; charset=utf-8\n");
             builder.append("\n");
-            builder.append("Invalid number format");
-            e.printStackTrace();
-          }
-          // Generate response
-          builder.append("HTTP/1.1 200 OK\n");
-          builder.append("Content-Type: text/html; charset=utf-8\n");
-          builder.append("\n");
-          builder.append("Result is: " + result);
+            builder.append("Result is: " + result);
+          // extract required fields from parameters
+        
 
+          // TODO: Include error handling here with a correct error code and
+          // a response that makes sense
 
-        }else if (request.contains("github?")) {
+        } else if (request.contains("github?")) {
           // pulls the query from the request and runs it with GitHub's REST API
           // check out https://docs.github.com/rest/reference/
           //
@@ -249,7 +250,7 @@ class WebServer {
           // TODO: Parse the JSON returned by your fetch and create an appropriate
           // response based on what the assignment document asks for
 
-        }  else if (request.contains("concatenate?")) {
+        } else if (request.contains("concatenate?")) {
           try {
               Map<String, String> query_pairs = new LinkedHashMap<String, String>();
               query_pairs = splitQuery(request.replace("concatenate?", ""));
@@ -275,33 +276,32 @@ class WebServer {
               builder.append("Content-Type: text/plain; charset=utf-8\n");
               builder.append("\n");
               builder.append(e.getMessage());
-          }
-        } else if (request.contains("length?")) {
-          try {
-              Map<String, String> query_pairs = new LinkedHashMap<String, String>();
-              query_pairs = splitQuery(request.replace("length?", ""));
-      
-              String str = query_pairs.get("str");
-      
-              if (str == null) {
-                  throw new IllegalArgumentException("str must be provided");
-              }
-      
-              int length = str.length();
-      
-              // Generate response for successful length calculation
-              builder.append("HTTP/1.1 200 OK\n");
-              builder.append("Content-Type: text/plain; charset=utf-8\n");
-              builder.append("\n");
-              builder.append("Length: " + length);
-      
-          } catch (IllegalArgumentException e) {
-              // Generate response for invalid arguments
-              builder.append("HTTP/1.1 400 Bad Request\n");
-              builder.append("Content-Type: text/plain; charset=utf-8\n");
-              builder.append("\n");
-              builder.append(e.getMessage());
-          }else {
+          } else if (request.contains("length?")) {
+            try {
+                Map<String, String> query_pairs = new LinkedHashMap<String, String>();
+                query_pairs = splitQuery(request.replace("length?", ""));
+        
+                String str = query_pairs.get("str");
+        
+                if (str == null) {
+                    throw new IllegalArgumentException("str must be provided");
+                }
+        
+                int length = str.length();
+        
+                // Generate response for successful length calculation
+                builder.append("HTTP/1.1 200 OK\n");
+                builder.append("Content-Type: text/plain; charset=utf-8\n");
+                builder.append("\n");
+                builder.append("Length: " + length);
+        
+            } catch (IllegalArgumentException e) {
+                // Generate response for invalid arguments
+                builder.append("HTTP/1.1 400 Bad Request\n");
+                builder.append("Content-Type: text/plain; charset=utf-8\n");
+                builder.append("\n");
+                builder.append(e.getMessage());
+            } else {
           // if the request is not recognized at all
 
           builder.append("HTTP/1.1 400 Bad Request\n");
