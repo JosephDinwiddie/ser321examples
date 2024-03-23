@@ -198,6 +198,7 @@ class WebServer {
         } else if (request.contains("multiply?")) {
           // This multiplies two numbers, there is NO error handling, so when
           // wrong data is given this just crashes
+          Integer result;
 
           try {
             Map<String, String> query_pairs = new LinkedHashMap<String, String>();
@@ -209,7 +210,7 @@ class WebServer {
             Integer num2 = Integer.parseInt(query_pairs.get("num2"));
 
             // do math
-            Integer result = num1 * num2;
+            result = num1 * num2;
 
             
           } catch (NumberFormatException e) {
