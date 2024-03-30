@@ -130,6 +130,17 @@ class SockClient {
         if (res.getBoolean("ok")){
           if (res.getString("type").equals("echo")) {
             System.out.println(res.getString("echo"));
+          } else if (res.getString("type").equals("result")){
+            System.out.println("Roller result: ");
+            for (String key : res.keySet()) {
+              System.out.println(key + ": " + res.getInt(key));
+            }
+          } else if (res.getString("type").equals("inventory")) {
+            JSONArray inventory = res.getJSONArray("inventory");
+            for (int j = 0; j < inventory.length(); j++) {
+              JSONObject product = inventory.getJSONObject(j);
+              System.out.println("Product: " + product.getString("productName") + " Quantity: " + item.getInt("quantity"));
+            }
           } else {
             System.out.println(res.getInt("result"));
           }
