@@ -137,16 +137,16 @@ class SockClient {
                 System.out.println(key + ": " + result.getInt(key));
             }
           } else if (res.getString("type").equals("inventory")) {
-              if (res.getString("task").equals("view")){
+              if (res.has("task") && res.getString("task").equals("view")){
                 JSONArray inventory = res.getJSONArray("inventory");
                 System.out.println("Inventory:");
                 for (int j = 0; j < inventory.length(); j++) {
                   JSONObject product = inventory.getJSONObject(j);
                   System.out.println("Product: " + product.getString("productName") + ", Quantity: " + product.getInt("quantity"));
                 }
-              }else if(res.getString("task").equals("add")){
+              }else if(res.has("task") && res.getString("task").equals("add")){
                 System.out.println(res.getString("message"));
-              }else if(res.getString("task").equals("buy")){
+              }else if(res.has("task") && res.getString("task").equals("buy")){
                 System.out.println(res.getString("message"));
               }
            
