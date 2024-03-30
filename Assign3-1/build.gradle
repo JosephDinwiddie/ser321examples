@@ -32,6 +32,6 @@ task Client(type: JavaExec) {
   classpath = sourceSets.main.runtimeClasspath
 
   main = 'SockClient'
-  args "localhost"
+  args "18.217.212.246"
   args 8888
 }
