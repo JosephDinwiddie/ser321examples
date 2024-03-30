@@ -282,8 +282,8 @@ public class SockServer {
 
       JSONObject result = new JSONObject();
       for (int i = 0; i < dieCount; i++){
-        int roll = (int) (Math.random() * faces) + 1;
-        result.put(Integer.toString(roll), result.optInt(Integer.toString(roll, 0) + 1));
+        int roll = ((int) (Math.random() * faces) + 1);
+        result.put(Integer.toString(roll));
       }
       res.put("type", "roller");
       res.put("ok", true);
