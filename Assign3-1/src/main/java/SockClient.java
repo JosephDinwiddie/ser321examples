@@ -139,8 +139,8 @@ class SockClient {
           } else if (res.getString("type").equals("inventory")) {
               JSONArray inventory = res.getJSONArray("inventory");
               System.out.println("Inventory:");
-              for (int i = 0; i < inventory.length(); i++) {
-                JSONObject product = inventory.getJSONObject(i);
+              for (int j = 0; j < inventory.length(); j++) {
+                JSONObject product = inventory.getJSONObject(j);
                 System.out.println("Product: " + product.getString("product") + ", Quantity: " + product.getInt("quantity"));
               }
           } else {
