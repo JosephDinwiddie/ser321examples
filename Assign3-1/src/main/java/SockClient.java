@@ -130,17 +130,19 @@ class SockClient {
         if (res.getBoolean("ok")){
           if (res.getString("type").equals("echo")) {
             System.out.println(res.getString("echo"));
-          } else if (res.getString("type").equals("roller")){
-            System.out.println("Roller result: ");
-            for (String key : res.keySet()) {
-              System.out.println(key + ": " + res.getInt(key));
+          } else if (res.getString("type").equals("roller")) {
+            JSONObject result = res.getJSONObject("result");
+            System.out.println("Roller Result:");
+            for (String key : result.keySet()) {
+                System.out.println(key + ": " + result.getInt(key));
             }
           } else if (res.getString("type").equals("inventory")) {
-            JSONArray inventory = res.getJSONArray("inventory");
-            for (int j = 0; j < inventory.length(); j++) {
-              JSONObject product = inventory.getJSONObject(j);
-              System.out.println("Product: " + product.getString("productName") + " Quantity: " + product.getInt("quantity"));
-            }
+              JSONArray inventory = res.getJSONArray("inventory");
+              System.out.println("Inventory:");
+              for (int i = 0; i < inventory.length(); i++) {
+                JSONObject product = inventory.getJSONObject(i);
+                System.out.println("Product: " + product.getString("product") + ", Quantity: " + product.getInt("quantity"));
+              }
           } else {
             System.out.println(res.getInt("result"));
           }
