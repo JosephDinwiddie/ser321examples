@@ -130,7 +130,7 @@ class SockClient {
         if (res.getBoolean("ok")){
           if (res.getString("type").equals("echo")) {
             System.out.println(res.getString("echo"));
-          } else if (res.getString("type").equals("result")){
+          } else if (res.getString("type").equals("roller")){
             System.out.println("Roller result: ");
             for (String key : res.keySet()) {
               System.out.println(key + ": " + res.getInt(key));
