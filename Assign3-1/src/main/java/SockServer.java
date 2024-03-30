@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class SockServer {
   static Socket sock;
-  static DataOutputStream os;
+  static ObjectOutputStream os;
   static ObjectInputStream in;
 
   static int port = 8888;
@@ -61,7 +61,6 @@ public class SockServer {
 
         // create an object output writer (Java only)
         os = new DataOutputStream(out);
-        os.flush();
 
         boolean connected = true;
         while (connected) {
