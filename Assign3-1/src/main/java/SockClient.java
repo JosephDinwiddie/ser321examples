@@ -141,7 +141,7 @@ class SockClient {
               System.out.println("Inventory:");
               for (int j = 0; j < inventory.length(); j++) {
                 JSONObject product = inventory.getJSONObject(j);
-                System.out.println("Product: " + product.getString("product") + ", Quantity: " + product.getInt("quantity"));
+                System.out.println("Product: " + product.getString("productName") + ", Quantity: " + product.getInt("quantity"));
               }
           } else {
             System.out.println(res.getInt("result"));
