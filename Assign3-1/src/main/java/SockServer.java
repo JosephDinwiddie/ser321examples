@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class SockServer {
   static Socket sock;
-  static ObjectOutputStream os;
+  static DataOutputStream os;
   static ObjectInputStream in;
 
   static int port = 8888;
@@ -24,6 +24,8 @@ public class SockServer {
   
 
   public static void main (String args[]) {
+    inventory.add(new Product("apple", 10));
+    inventory.add(new Product("banana", 5));
 
     if (args.length != 1) {
       System.out.println("Expected arguments: <port(int)>");
@@ -60,7 +62,7 @@ public class SockServer {
         OutputStream out = sock.getOutputStream();
 
         // create an object output writer (Java only)
-        os = new ObjectOutputStream(out);
+        os = new DataOutputStream(out);
 
         boolean connected = true;
         while (connected) {
