@@ -61,6 +61,7 @@ public class SockServer {
 
         // create an object output writer (Java only)
         os = new DataOutputStream(out);
+        os.flush();
 
         boolean connected = true;
         while (connected) {
