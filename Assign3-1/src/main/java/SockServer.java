@@ -20,6 +20,9 @@ public class SockServer {
   static int port = 8888;
 
   private static List<Product> inventory = new ArrayList<>();
+
+  
+
   public static void main (String args[]) {
 
     if (args.length != 1) {
