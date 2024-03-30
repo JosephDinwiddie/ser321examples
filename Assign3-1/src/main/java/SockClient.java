@@ -145,9 +145,9 @@ class SockClient {
                   System.out.println("Product: " + product.getString("productName") + ", Quantity: " + product.getInt("quantity"));
                 }
               }else if(res.getString("task").equals("add")){
-                System.out.println("Added " + res.getString("productName") + " to inventory.");
+                System.out.println(res.getString("message"));
               }else if(res.getString("task").equals("buy")){
-                System.out.println("Bought " + res.getString("productName") + " from inventory.");
+                System.out.println(res.getString("message"));
               }
            
           } else {
