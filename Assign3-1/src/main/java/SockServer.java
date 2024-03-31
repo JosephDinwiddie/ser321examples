@@ -193,6 +193,7 @@ public class SockServer {
         }
         res.put("ok", true);
         res.put("message", "Added " + quantity + " " + productName + " to inventory");
+        res.put("inventory", inventoryJsonArray);
         } else if (task.equals("view")){
           JSONArray inventoryJsonArray = new JSONArray();
           for (Product p : inventory){
