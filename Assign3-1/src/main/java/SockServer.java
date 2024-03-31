@@ -184,6 +184,13 @@ public class SockServer {
         String productName = req.getString("productName");
         int quantity = req.getInt("quantity");
         addProduct(productName, quantity);
+        JSONArray inventoryJsonArray = new JSONArray();
+        for (Product p : inventory){
+          JSONObject productJson = new JSONObject();
+          productJson.put("productName", p.getName());
+          productJson.put("quantity", p.getQuantity());
+          inventoryJsonArray.put(productJson);
+        }
         res.put("ok", true);
         res.put("message", "Added " + quantity + " " + productName + " to inventory");
         } else if (task.equals("view")){
